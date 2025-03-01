@@ -74,15 +74,67 @@ public class ProductService {
     }
 
     // TODO: Method to search products by name
+    
+    public List<Product> findProductByName(String name) {
+    	List<Product> Product1 = new ArrayList<Product>();
+  
+    	for (Product ele:products) {
+    
+    		if (ele.getName().equals(name)) {
+    			//System.out.println("inside if loop of name search , ele is "+ele.getName()+" name in input is "+name);
+    			Product1.add(ele);
+    			return Product1;
+    		}
+    		
+    	}
+    	return null;
+    }
 
 
     // TODO: Method to filter products by category
 
-
+    public List<Product> findProductByCategory(String category) {
+    	
+    	List<Product> Products2 = new ArrayList<Product>();
+    	
+    	for (Product ele:products) {
+    		//System.out.println("ele.getcat"+ele.getCategory()+"input is "+category);
+    		if (ele.getCategory().equals(category)) {
+    			Products2.add(ele);
+    			 
+    		}
+    		
+    		
+    		
+    	}
+    	return Products2;
+    }
+    
     // TODO: Method to filter products by price range
-
+    public List<Product> filterByPriceRange(double minPrice,double maxPrice) {
+    	List<Product> Products3 = new ArrayList<Product>();
+    	for (Product ele:products) {
+    		if (ele.getPrice()>=minPrice && ele.getPrice()<=maxPrice) {
+    			
+    			Products3.add(ele);
+    			
+    			 }
+    	
+    		 
+    	}
+    	return Products3;
+    }
 
     // TODO: Method to filter products by stock quantity range
-
+    public List<Product> filterByStockRange(double minStock,double maxStock) {
+    	List<Product> Products4 = new ArrayList<Product>();
+    	for (Product ele:products) {
+    		if (ele.getStockQuantity()>=minStock && ele.getStockQuantity()<=maxStock) {
+    			Products4.add(ele);
+    			 }
+    		
+    	}
+    	return Products4;
+    }
     
 }

@@ -4,6 +4,7 @@ import com.mystore.app.entity.Product;
 import com.mystore.app.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -60,15 +61,62 @@ public class ProductController {
     }
 
     // TODO: API to search products by name
+    @GetMapping("/search")
+    public ResponseEntity<List<Product>> getProductByName(@RequestParam ("name") String name){
+    	List<Product> p = productService.findProductByName(name);
+    	if(p.isEmpty()) {
+    		return new ResponseEntity<>(null,HttpStatus.NO_CONTENT);
+    	}
+    	
+    		return new ResponseEntity<>(p, HttpStatus.OK);
+    
+    }
 
 
     // TODO: API to filter products by category
+    @GetMapping("/filter/category")
+    public ResponseEntity<List<Product>> getProductByCategory(@RequestParam ("category") String category){
+    	List<Product> p = productService.findProductByCategory(category);
+    	
+    	if(p.isEmpty()) {
+    		return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    	}
+    	
+    	return new ResponseEntity<List<Product>>(p, HttpStatus.OK);
+    	
+    }
 
 
     // TODO: API to filter products by price range
+    
+    @GetMapping("/filter/price")
+    public ResponseEntity<List<Product>> getProductByPriceRange(@RequestParam ("minPrice") double minPrice, @RequestParam("maxPrice") double maxPrice)
+    {
+    	List<Product> p = productService.filterByPriceRange(minPrice, maxPrice);
+    	if(p.isEmpty()) {
+    		return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    	}
+  
+    	return new ResponseEntity<List<Product>>(p, HttpStatus.OK);
+    
+    }
+
+
+    
+    
 
 
     // TODO: API to filter products by stock quantity range
-
+    @GetMapping("/filter/stock")
+    public ResponseEntity<List<Product>> getProductByStockRange(@RequestParam ("minStock") double minStock, @RequestParam("maxStock") double maxStock)
+    {
+    	List<Product> p = productService.filterByStockRange(minStock, maxStock);
+    	if(p.isEmpty()) {
+    		return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    	}
+    
+    	return new ResponseEntity<List<Product>>(p, HttpStatus.OK);
+    	
+    }
 
 }
